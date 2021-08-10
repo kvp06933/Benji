@@ -57,39 +57,76 @@
                 <div class="col-lg-8">
                     <pre class="line-numbers">
                         <code class="language-jsx language-javascript language-markup">
-                            function Benji(){
-                                //VARIABLES
-                            
-                            let table = document.createElement("table");  // This will hold all the list items
-                            table.className="table table-striped";
-                            let tbody = document.createElement("tbody");
-                            table.appendChild(tbody);
-                            // let start = $(`#firstInput`).value;
-                            // let end = $(`#secondInput`).value;
-                            //PRINT NUMBERS 1 - 100 TO THE SCREEN
-                            for(i = 0; i <= 100; i++){
-                              let tr = document.createElement('tr');
-                              let td = document.createElement('td');
-                              td.textContent = [i]; // Use .textContent when the string doesn't contain any HTML
-                              tbody.appendChild(tr);
-                              tr.appendChild(td);
-                              if(i%2 === 0){
-                                  td.className="fw-bold";
+                            function getValues(){
+                                //get values from the page
+                                let startValue = document.getElementById("startValue").value;
+                                let endValue = document.getElementById("endValue").value;
+                                let numbers = [];
+                                //We need to validate our input
+                                //Parse into integers
+                                startValue = parseInt(startValue);
+                                endValue = parseInt(endValue);
+                                
+                                if(Number.isInteger(startValue) && Number.isInteger(endValue)){
+                                  //we call generateNumbers
+                                  numbers = generateNumbers(startValue, endValue);
+                                  //we call displayNumbers
+                                  displayNumbers(numbers);        
+                                } else {
+                                    alert("You must enter integers");
+                                }
                               }
-                            }
-                            
-                            // Now, append the entire list to the document with just one DOM change
-                            document.querySelector(".results").appendChild(table);
-                            
-                            }
+                              
+                              //generate numbers from startvalue to endvalue 
+                              //logic function(s)
+                              function generateNumbers(sValue, eValue){
+                                let numbers = [];
+                                //We want to get all numbers from start to end
+                                for (let index = sValue; index <= eValue; index++) {
+                                  //This will execute in a loop until index = eValue
+                                  numbers.push(index);
+                                  
+                                }
+                                return numbers;  
+                              }
+                              
+                              //display the numbers and mark even bold
+                              //display or view functions
+                              function displayNumbers(numbers){
+                                let templateRows = "";
+                                for (let index = 0; index < numbers.length; index++) {
+                                      let className = "even";
+                                      let number = numbers[index];
+                                      if(number % 2 == 0){
+                                        className = "even";
+                                          
+                                      } else{
+                                        className = "odd"
+                                      }
+                                      templateRows += `&lt;tr>&lt;td class="${className}">${number}&lt;/td>&lt;/tr>
+                              
+                                     
+                                  
+                                }
+                                document.getElementById("results").innerHTML = templateRows;
+                              }
                             
                         </code>
                     </pre>
                 </div>
                 <div class="col-lg-4">
-                    <p>The Code is structured in one function.</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+                    <p>The Code is structured in three functions.</p>
+                    <h5>Get Values</h5>
+                    <p>Get Values stores the start and end values entered by the user. It converts each string value into an integer, if the input can be converted. If the input cannot be converted to an integer, an alert is called to enter integers only.</p>
+                    <p>After the inputs are converted to integers, the generateNumbers and displayNumbers functions are both called.</p>
+                    <h5>Generate Numbers</h5>
+                    <p>Generate Numbers initializes an empty array to store integers. The user inputs are used as intial and end parameters for a for loop.</p>
+                    <p>The loop increments each index value by one. Each index value is pushed to the numbers array. The numbers array is returned.</p>
+                    
+                    <h5>Display Numbers</h5>
+                    <p>Display Numbers initializes an empty string stored in the variable templateRows. A for loop cycles through the numbers array.</p>
+                    <p>Each number is divided by two to determine if it's even or odd. An "even" or "odd" class is then added to the td. Finally, all rows are displayed in the table.</p>
+                    
                 </div>
             </div>
         </div>
